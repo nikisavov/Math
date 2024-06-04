@@ -1,0 +1,50 @@
+import java.io.*;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+       
+        Scanner scanner = new Scanner(System.in);
+
+     
+        System.out.println("What is your name?");
+        String name = scanner.nextLine();
+
+        
+        for (int count = 1; count <= 5; count++) {
+            int num1 = (int)(Math.random() * 100);
+            int num2 = (int)(Math.random() * 100);
+
+           
+            System.out.println(num1 + " + " + num2 + " = ?");
+
+         
+            int ans = scanner.nextInt();
+
+       
+            writeToText(ans, num1, num2, name);
+        }
+        
+        
+        scanner.close();
+    }
+
+    
+    public static boolean isAnswerCorrect(int ans, int num1, int num2) {
+        int correct = num1 + num2;
+        return ans == correct;
+    }
+
+
+    public static void writeToText(int ans, int num1, int num2, String name) {
+        String file = name + "-answers.txt";
+        
+        try (FileWriter fileWriter = new FileWriter(file, true)) {
+            boolean isCorrect = isAnswerCorrect(ans, num1, num2);
+            fileWriter.write("Question: " + num1 + " + " + num2 + " = " + ans + " (Correct: " + isCorrect + ")\n");
+            System.out.println("Answer recorded: " + isCorrect);
+        } catch (IOException i) {
+            System.out.println("An error occurred: " + i.getMessage());
+        }
+    }
+}
